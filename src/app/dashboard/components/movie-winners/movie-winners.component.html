@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-md-12 py-3">
+        <b>List movie winners by year</b>
+    </div>
+    <div class="col-md-12 py-3">
+        <form class="form-inline" novalidate autocomplete="off" [formGroup]="form">
+            <input type="number" class="form-control form-control-sm" placeholder="Search by year" formControlName="year">
+            &nbsp;
+            <button [disabled]="form.invalid" class="btn btn-primary btn-sm" (click)="getMovies()"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Year</th>
+                    <th>Title</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of movies">
+                    <td> {{ item.id }}</td>
+                    <td> {{ item.year }}</td>
+                    <td> {{ item.title }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

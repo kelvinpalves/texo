@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-md-12 py-3">
+        <b>Producers with longest and shortest interval between wins</b>
+    </div>
+    <div class="col-md-12">
+        Maximum
+    </div>
+    <div class="col-md-12">
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th>Producer</th>
+                    <th>Interval</th>
+                    <th>Previous Year</th>
+                    <th>Following Year</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="max">
+                    <td>{{ max.producer }}</td>
+                    <td>{{ max.interval }}</td>
+                    <td>{{ max.previousWin }}</td>
+                    <td>{{ max.followingWin }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-12">
+        Minimum
+    </div>
+    <div class="col-md-12">
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th>Producer</th>
+                    <th>Interval</th>
+                    <th>Previous Year</th>
+                    <th>Following Year</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="min">
+                    <td>{{ min.producer }}</td>
+                    <td>{{ min.interval }}</td>
+                    <td>{{ min.previousWin }}</td>
+                    <td>{{ min.followingWin }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

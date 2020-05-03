@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-md-12 py-3">
+        <b>List years with multiple winners</b>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Win Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of multipleWinnersList">
+                    <td> {{ item.year }}</td>
+                    <td> {{ item.winnerCount }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-md-12 py-3">
+        <b>Top 3 studios with winners</b>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Win Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of studioList">
+                    <td> {{ item.name }}</td>
+                    <td> {{ item.winCount }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
