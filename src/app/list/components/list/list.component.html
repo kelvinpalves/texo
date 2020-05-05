@@ -1,1 +1,56 @@
-<p>list works!</p>
+<div class="row">
+    <div class="col-md-12 py-3">
+        <b>List movies</b>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Year</th>
+                    <th>Title</th>
+                    <th>Winner</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of movies">
+                    <td> {{ item.id }}</td>
+                    <td> {{ item.year }}</td>
+                    <td> {{ item.title }}</td>
+                    <td> {{ getTextWinner(item.winner) }}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-center no-margin-td">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item" [ngClass]="{'disabled': disablePrevious()}" (click)="setFirstPage()">
+                                <a class="page-link" href="#" [routerLink]="">
+                                    <i class="fas fa-angle-double-left"></i>
+                                </a>
+                            </li>
+                            <li class="page-item" [ngClass]="{'disabled': disablePrevious()}" (click)="previous()">
+                                <a class="page-link" href="#" [routerLink]="" >
+                                    <i class="fas fa-angle-left"></i>
+                                </a>
+                            </li>
+                            <li class="page-item" [ngClass]="{'active': isActive(page)}" *ngFor="let page of pageIndex" (click)="setPage(page)">
+                                <a class="page-link" href="#" [routerLink]="">{{ page }}</a>
+                            </li>
+                            <li class="page-item" [ngClass]="{'disabled': disableNext()}" (click)="next()">
+                                <a class="page-link" href="#" [routerLink]="">
+                                    <i class="fas fa-angle-right"></i>
+                                </a>
+                            </li>
+                            <li class="page-item" [ngClass]="{'disabled': disableNext()}" (click)="setLastPage()">
+                                <a class="page-link" href="#" [routerLink]="">
+                                    <i class="fas fa-angle-double-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
