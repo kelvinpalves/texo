@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ListService } from '../../services';
 import { List, Pageable } from '../../models';
-import { Observable } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Movies } from 'src/app/dashboard';
 
 @Component({
@@ -15,25 +15,35 @@ export class ListComponent implements OnInit {
   movies: Movies[];
   pageable: Pageable;
   pageIndex: number[];
+  form: FormGroup;
 
-  private readonly NUMBER_OF_PAGE_ITENS = 5;
-  private readonly START_ARRAY_PAGES = 0;
-  private readonly END_ARRAY_PAGES = (this.NUMBER_OF_PAGE_ITENS - 1);
-  private readonly START = 1;
-  private readonly SIZE = 10;
   private readonly AUX_PAGE = 1;
+  private readonly NUMBER_OF_PAGE_ITENS = 5;
+  private readonly SIZE = 10;
+  private readonly START = 1;
 
   constructor(
+    private fb: FormBuilder,
     private service: ListService
   ) { }
 
   ngOnInit(): void {
-    this.createListOfPages(this.START, this.NUMBER_OF_PAGE_ITENS);
+    this.createForm();
+    this.getMovies(this.START, this.SIZE);
+  }
+
+  createForm() {
+    this.form = this.fb.group({
+      year: ['', []],
+      winner: ['', []],
+    });
+  }
+
+  reloadMovies() {    
     this.getMovies(this.START, this.SIZE);
   }
 
   setFirstPage() {
-    this.createListOfPages(this.START, this.NUMBER_OF_PAGE_ITENS);
     this.getMovies(this.START, this.SIZE);
   }
 
@@ -45,28 +55,24 @@ export class ListComponent implements OnInit {
   }
 
   next() {
-    let next = this.getActualPage() + 1;
-    this.createListOfPages(next, this.NUMBER_OF_PAGE_ITENS);
-    this.getMovies(next, this.SIZE);
+    if (!this.disableNext()) {
+      let next = this.getActualPage() + 1;
+      this.getMovies(next, this.SIZE);
+    }
   }
 
   previous() {
-    let previous = this.getActualPage() - 1;
-    this.createListOfPages(previous, this.NUMBER_OF_PAGE_ITENS);
-    this.getMovies(previous, this.SIZE);
+    if (!this.disablePrevious()) {
+      let previous = this.getActualPage() - 1;
+      this.getMovies(previous, this.SIZE);
+    }
   }
 
   setLastPage() {
-    this.createListOfPages(this.getTotalPages(), this.NUMBER_OF_PAGE_ITENS);
     this.getMovies(this.getTotalPages(), this.SIZE);
   }
 
   setPage(page: number) {
-    if (page == this.pageIndex[this.START_ARRAY_PAGES] 
-      || page == this.pageIndex[this.END_ARRAY_PAGES]) {
-      this.createListOfPages(page, this.NUMBER_OF_PAGE_ITENS);
-    }
-    
     this.getMovies(page, this.SIZE);
   }
 
@@ -79,6 +85,10 @@ export class ListComponent implements OnInit {
     return (page - this.AUX_PAGE) == actual;
   }
 
+  showPagination() {
+    return this.list && !this.list.empty;
+  }
+
   getTotalPages() {
     return this.list 
       && this.list.totalPages 
@@ -86,20 +96,24 @@ export class ListComponent implements OnInit {
   }
 
   createListOfPages(page, max) {
+    this.pageIndex = [];
+    
     let total = this.getTotalPages();
     let remainingPages = total - page;
     let initialPage = page;
 
-    if (remainingPages < this.NUMBER_OF_PAGE_ITENS) {
-      initialPage = total - 4;
-    }
-
-    this.pageIndex = [];
-    max = initialPage + max;
-  
-    for (let i = initialPage; i < max; i++) {
+    initialPage = remainingPages < this.NUMBER_OF_PAGE_ITENS ? (total - 4) : initialPage;
+    max = initialPage + (--max);
+    max = total < this.NUMBER_OF_PAGE_ITENS ? total : max;
+    initialPage = initialPage < 0 ? this.START : initialPage;
+    
+    for (let i = initialPage; i <= max; i++) {
       this.pageIndex.push(i);
     }
+  }
+
+  getList() {
+    return this.list;
   }
 
   disablePrevious(): boolean {
@@ -125,11 +139,15 @@ export class ListComponent implements OnInit {
   }
 
   getMovies(page: number, size: number) {
-    this.service.getMovies(this.getPage(page), size)
+    let year = this.form.get('year').value;
+    let winner = this.form.get('winner').value;
+
+    this.service.getMovies(this.getPage(page), size, year, winner)
       .subscribe(
         data => {
           this.list = data;
           this.movies = this.list.content;
+          this.createListOfPages(this.getActualPage(), this.NUMBER_OF_PAGE_ITENS);
         },
         err => {
           console.log(err);

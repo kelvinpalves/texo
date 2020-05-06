@@ -3,13 +3,24 @@
         <b>List movies</b>
     </div>
     <div class="col-md-12">
+        <form novalidate autocomplete="off" [formGroup]="form">
         <table class="table table-bordered table-sm">
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Year</th>
+                    <th>
+                        Year
+                        <input type="number" class="form-control input-sm" name="year" placeholder="Filter by year" formControlName="year" (change)="reloadMovies()">
+                    </th>
                     <th>Title</th>
-                    <th>Winner</th>
+                    <th>
+                        Winner
+                        <select class="form-control input-sm" formControlName="winner" (change)="reloadMovies()">
+                            <option value="">Select</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -20,7 +31,7 @@
                     <td> {{ getTextWinner(item.winner) }}</td>
                 </tr>
             </tbody>
-            <tfoot>
+            <tfoot *ngIf="showPagination()">
                 <tr>
                     <td colspan="4" class="text-center no-margin-td">
                         <ul class="pagination justify-content-center">
@@ -52,5 +63,6 @@
                 </tr>
             </tfoot>
         </table>
+        </form>
     </div>
 </div>

@@ -8,13 +8,8 @@ export class List {
         public content: Movies[],
         public pageable: Pageable,
         public totalPages: number,
-        public totalElements: number,
         public last: boolean,
         public first: boolean,
-        public sort: Sort,
-        public number: number,
-        public numberOfElements: number,
-        public size: number,
         public empty: boolean
     ) { }
 

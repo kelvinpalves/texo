@@ -1,8 +1,12 @@
 <ul class="nav flex-column">
     <li class="nav-item">
-        <a class="nav-link active" href="dashboard">Dashboard</a>
+        <a class="nav-link" [ngClass]="{'active': isActive('/dashboard')}" href="dashboard" >
+            Dashboard
+        </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="list">List</a>
+        <a class="nav-link" [ngClass]="{'active': isActive('/list')}" href="list">
+            List
+        </a>
     </li>
 </ul>

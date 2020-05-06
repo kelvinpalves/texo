@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 
 import { 
   DashboardModule,
@@ -21,6 +22,7 @@ import { SideBarComponent } from './main/components/side-bar/side-bar.component'
   ],
   imports: [
     BrowserModule,
+    LoadingBarHttpClientModule,
     DashboardModule,
     DashboardRoutingModule,
     ListModule,

@@ -9,10 +9,16 @@ export class ListService {
 
   constructor(private http: HttpClient) { }
 
-  getMovies(pageNumber: number, pageSize: number): Observable<any> {
-    return this.http.get(
-      env.urlBase 
-      + '?page=' + pageNumber
-      + '&size=' + pageSize);
+  getUrl(pageNumber: number, pageSize: number, year: number, winner: boolean) {
+    let url = env.urlBase + '?page=' + pageNumber + '&size=' + pageSize;
+    if (year) url += '&year=' + year;
+    if (winner) url += '&winner=' + winner;
+    
+    return url;
   }
+
+  getMovies(pageNumber: number, pageSize: number, year: number, winner: boolean): Observable<any> {
+    return this.http.get(this.getUrl(pageNumber, pageSize, year, winner));
+  }
+
 }

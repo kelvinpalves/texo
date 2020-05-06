@@ -15,3 +15,8 @@ tfoot tr td ul li a {
 li.disabled {
     cursor: not-allowed;
 }
+
+table thead tr th {
+    vertical-align: middle;
+    text-align: center;
+}
