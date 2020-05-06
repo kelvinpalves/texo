@@ -3,6 +3,7 @@ import { ListService } from '../../services';
 import { List, Pageable } from '../../models';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Movies } from 'src/app/dashboard';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-list',
@@ -24,7 +25,8 @@ export class ListComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private service: ListService
+    private service: ListService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -112,20 +114,14 @@ export class ListComponent implements OnInit {
     }
   }
 
-  getList() {
-    return this.list;
-  }
-
   disablePrevious(): boolean {
-    if (!this.list) 
-      return false;
+    if (!this.list)  return false;
 
     return this.list.first;
   }
 
   disableNext(): boolean {
-    if (!this.list)
-      return false;
+    if (!this.list) return false;
 
     return this.list.last;
   }
@@ -150,7 +146,8 @@ export class ListComponent implements OnInit {
           this.createListOfPages(this.getActualPage(), this.NUMBER_OF_PAGE_ITENS);
         },
         err => {
-          console.log(err);
+          this.toastr.error("Error to load the data.");
+          console.error(err);
         }
       );
   }

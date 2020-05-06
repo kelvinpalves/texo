@@ -1,5 +1,4 @@
 export class Movies {
-
     constructor(
         public id: number,
         public year: number,
@@ -8,5 +7,4 @@ export class Movies {
         public producers: any[],
         public winner: boolean
     ) { }
-
 }

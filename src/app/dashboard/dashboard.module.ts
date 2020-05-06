@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DashboardService } from './services';
 
 import { 
   DashboardFullComponent, 
@@ -12,8 +13,6 @@ import {
   ProducersComponent,
   MovieWinnersComponent
 } from './components';
-
-import { DashboardService } from './services';
 
 @NgModule({
   declarations: [

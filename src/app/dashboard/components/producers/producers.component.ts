@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../services';
 import { Producer } from '../../models';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-producers',
@@ -12,7 +13,8 @@ export class ProducersComponent implements OnInit {
   max: Producer;
 
   constructor(
-    private service: DashboardService
+    private service: DashboardService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -27,7 +29,8 @@ export class ProducersComponent implements OnInit {
           this.max = data.max[0];
         },
         err => {
-          console.error("Erro load producers.");
+          this.toastr.error("Error to load the data.");
+          console.error(err);
         }
       );
   }

@@ -6,6 +6,7 @@ import { ListMoviesComponent, ListComponent } from './../../components';
 import { ListService } from '../../services';
 import { ReactiveFormsModule } from '@angular/forms';
 import { List, Pageable } from '../../models';
+import { ToastrModule } from 'ngx-toastr';
 
 const ListRoutes: Routes = [
   {
@@ -26,6 +27,7 @@ describe('ListComponent', () => {
       declarations: [ ListMoviesComponent, ListComponent ],
       imports: [
         CommonModule, RouterModule, HttpClientModule, ReactiveFormsModule,
+        ToastrModule.forRoot(),
         RouterModule.forRoot(ListRoutes)
       ],
       providers: [ ListService ]
@@ -70,12 +72,6 @@ describe('ListComponent', () => {
   it('must verify that the conversion of the front end page to the back end is correct', () => {
     expect(component.getPage(10)).toBe(9);
   });
-
-  it('tomara que de', () => {
-    component.setPage(5);
-    expect(component.getMovies).toHaveBeenCalled();
-  });
-
 
   it('validate list of integers that will be used to assemble the pagination', () => {
     let pageable = new Pageable(null, 10, 3, 0, true, false);

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../services';
 import { MultipleWinners } from '../../models';
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-multiple-winners',
@@ -13,7 +14,8 @@ export class MultipleWinnersComponent implements OnInit {
   multipleWinnersList: Observable<MultipleWinners>;
 
   constructor(
-    private service: DashboardService
+    private service: DashboardService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -27,7 +29,8 @@ export class MultipleWinnersComponent implements OnInit {
           this.multipleWinnersList = data.years;
         },
         err => {
-          console.error("Erro load multiple winners list.");
+          this.toastr.error("Error to load the data.");
+          console.error(err);
         }
       );
   }

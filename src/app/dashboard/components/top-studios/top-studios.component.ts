@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../services';
 import { Studio } from '../../models';
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-top-studios',
@@ -13,7 +14,8 @@ export class TopStudiosComponent implements OnInit {
   studioList: Observable<Studio>;
 
   constructor(
-    private service: DashboardService
+    private service: DashboardService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -27,7 +29,8 @@ export class TopStudiosComponent implements OnInit {
           this.studioList = data.studios.splice(0,3);
         },
         err => {
-          console.error("Erro load studios list.");
+          this.toastr.error("Error to load the data.");
+          console.error(err);
         }
       );
   }

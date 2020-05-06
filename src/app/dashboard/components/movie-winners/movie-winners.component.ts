@@ -3,6 +3,7 @@ import { DashboardService } from '../../services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Movies } from '../../models';
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-movie-winners',
@@ -16,7 +17,8 @@ export class MovieWinnersComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private service: DashboardService
+    private service: DashboardService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -38,7 +40,8 @@ export class MovieWinnersComponent implements OnInit {
           this.movies = data;
         },
         err => {
-          console.error("Erro load movies");
+          this.toastr.error("Error to load the data.");
+          console.error(err);
         }
       );
   }
